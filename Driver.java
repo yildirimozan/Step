@@ -41,9 +41,6 @@ private static final int TIME_OUT = 2000;
 /** Default bits per second for COM port. */
 private static final int DATA_RATE = 9600;
 public void initialize() throws IOException {
-    // the next line is for Raspberry Pi and 
-    // gets us into the while loop and was suggested here was suggested http://www.raspberrypi.org/phpBB3/viewtopic.php?f=81&t=32186
-	
 
 	CommPortIdentifier portId = null;
 	Enumeration portEnum = CommPortIdentifier.getPortIdentifiers();
@@ -64,21 +61,17 @@ public void initialize() throws IOException {
 	}
 
 	try {
-		// open serial port, and use class name for the appName.
 		serialPort = (SerialPort) portId.open(this.getClass().getName(),
 				TIME_OUT);
 
-		// set port parameters
 		serialPort.setSerialPortParams(DATA_RATE,
 				SerialPort.DATABITS_8,
 				SerialPort.STOPBITS_1,
 				SerialPort.PARITY_NONE);
 
-		// open the streams
 		input = new BufferedReader(new InputStreamReader(serialPort.getInputStream()));
 		output = serialPort.getOutputStream();
 
-		// add event listeners
 		serialPort.addEventListener(this);
 		serialPort.notifyOnDataAvailable(true);
 	} catch (Exception e) {
@@ -87,10 +80,6 @@ public void initialize() throws IOException {
 
 }
 
-	/**
-	* This should be called when you stop using the port.
-	* This will prevent port locking on platforms like Linux.
-	*/
 public synchronized void close() {
 	if (serialPort != null) {
 		serialPort.removeEventListener();
@@ -110,7 +99,6 @@ public synchronized void serialEvent(SerialPortEvent oEvent) {
 			System.err.println(e.toString());
 		}
 	}
-// Ignore all the other eventTypes, but you should consider the other ones.
 
 }
 
@@ -126,8 +114,7 @@ public synchronized void serialEvent(SerialPortEvent oEvent) {
         main.initialize();
         Thread t=new Thread() {
             public void run() {
-                //the following line will keep this app alive for 1000 seconds,
-                //waiting for events to occur and responding to them (printing incoming messages to console).
+
                 try {Thread.sleep(1000000);} catch (InterruptedException ie) {}
             }
         };
@@ -146,15 +133,15 @@ public synchronized void serialEvent(SerialPortEvent oEvent) {
         
         final Button buton_aci = new Button(group, SWT.RADIO);
         buton_aci.setBounds(25, 18, 75, 20);
-        buton_aci.setText("A«I ›«›N");
+        buton_aci.setText("A√áI √ù√á√ùN");
         
         final Button buton_hiz = new Button(group, SWT.RADIO);
         buton_hiz.setBounds(225, 18, 75, 20);
-        buton_hiz.setText("HIZ ›«›N");
+        buton_hiz.setText("HIZ √ù√á√ùN");
         
         Label lbl_aci = new Label(shell, SWT.NONE);
         lbl_aci.setBounds(28, 55, 70, 20);
-        lbl_aci.setText("A«I");
+        lbl_aci.setText("A√áI");
 		
 		Label lbl_aci_min = new Label(shell, SWT.NONE);
 		lbl_aci_min.setBounds(48, 100, 70, 18);
@@ -220,11 +207,11 @@ public synchronized void serialEvent(SerialPortEvent oEvent) {
         
         final Button buton_sag = new Button(group_2, SWT.RADIO);
         buton_sag.setBounds(225, 18, 75, 20);
-        buton_sag.setText("SA–");
+        buton_sag.setText("SA√ê");
         
         Label lbl_step = new Label(shell, SWT.NONE);
         lbl_step.setBounds(28, 275, 70, 20);
-        lbl_step.setText("STEP M›KTARI");
+        lbl_step.setText("STEP M√ùKTARI");
         
 		Label lbl_step_min = new Label(shell, SWT.NONE);
 		lbl_step_min.setBounds(48, 320, 70, 18);
@@ -299,7 +286,7 @@ public synchronized void serialEvent(SerialPortEvent oEvent) {
         
 		Button btn_gonder = new Button(shell, SWT.NONE);
 		btn_gonder.setBounds(148, 352, 90, 30);
-		btn_gonder.setText("«al˝˛t˝r");
+		btn_gonder.setText("√áal√Ω√æt√Ωr");
 		btn_gonder.addSelectionListener(new SelectionAdapter() {
 			public void widgetSelected(SelectionEvent e) {
 				if(text_aci.getText().length()==2)
